@@ -164,7 +164,11 @@ export class BaseSmartAccountExecutor {
           .instruction(),
       ])
       .transaction();
-
+      const VALIDATE_EXECUTION_V3_DISC = Buffer.from("6d6a52007ae3d8c1", "hex");
+      const validateIx = executeTx.instructions.find((ix) =>
+      ix.programId.equals(this.saProgram.programId)
+      );
+      VALIDATE_EXECUTION_V3_DISC.copy(validateIx.data, 0);
     // Set recent blockhash
     let latestBlockhash = await this.provider.connection.getLatestBlockhash();
 
